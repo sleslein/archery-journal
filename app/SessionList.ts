@@ -14,4 +14,28 @@ export class SessionList {
     const data = await Deno.readTextFile("./arch-jrnl.txt");
     return new SessionList(data);
   }
+
+  async saveToFile() {
+    // copy/rename old file
+    Deno.renameSync(
+      "./arch-jrnl.txt",
+      `./arch-jrnl.txt-${new Date().toISOString()}`,
+    );
+
+    // generate new string with all sessions
+    const output = this.sessions.reduce(
+      (prev: string, current: ArcherySession) => {
+        return prev.concat(
+          ArcherySession.encodeSession({
+            date: current.date,
+            distance: current.distance,
+            arrows: current.arrows.map((x) => x[1].encodedValue),
+          }),
+        ).concat("\n");
+      },
+      "",
+    );
+    // save to new file
+    await Deno.writeTextFile("arch-jrnl.txt", output);
+  }
 }

@@ -52,6 +52,37 @@ if (cmd === "update") {
    * update --id [4] --date [yyyy-mm-dd] --distance [20] ...[[idx:arrow]]
    * update --id 1 5:tr5tr 7:tr8bw
    */
+  const sessionList = await SessionList.loadFromFile();
+  const { date, distance, id } = args;
+
+  if (!id) {
+    Deno.stderr.write(
+      new TextEncoder().encode(
+        "ERROR: Unable to complete update: --id flag is required",
+      ),
+    );
+    Deno.exit(1);
+  }
+
+  const session = sessionList.sessions[id];
+
+  if (distance) {
+    session.distance = distance;
+  }
+
+  if (date) {
+    session.date = date;
+  }
+
+  const [_command, ...arrows] = args._;
+  (arrows as string[]).forEach((arrowUpdate: string) => {
+    const [idx, encodedValue] = arrowUpdate.split(":");
+    session.updateArrow(parseInt(idx), encodedValue);
+  });
+
+  sessionList.saveToFile();
+
+  Deno.exit(0);
 }
 
 /**

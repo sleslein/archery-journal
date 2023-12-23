@@ -41,6 +41,11 @@ export class ArcherySession implements SessionDetails {
     );
   }
 
+  updateArrow(index: number, encodedValue: string) {
+    const x = tryDecodeArrowValue(encodedValue);
+    this.arrows[index] = x;
+  }
+
   static encodeSession(
     { date, distance, arrows }: EncodeSessionParams,
   ): string {
