@@ -2,9 +2,9 @@ import { parse } from "https://deno.land/std@0.108.0/flags/mod.ts";
 import { tryDecodeArrowValue } from "../app/arrow-value.ts";
 import { ArcherySession } from "../app/ArcherySession.ts";
 import { SessionList } from "../app/SessionList.ts";
-import { fmtSessionDetails } from "./fmt.ts";
+import { fmtSessionDetails, fmtSessionList } from "./fmt.ts";
 
-const commands = ["decode", "record", "update", "get"] as const;
+const commands = ["decode", "record", "update", "get", "list"] as const;
 type Command = typeof commands[number];
 
 const args = parse(Deno.args);
@@ -45,8 +45,30 @@ if (cmd === "record") {
 }
 
 /**
+ * Update existin session
+ */
+if (cmd === "update") {
+  /**
+   * update --id [4] --date [yyyy-mm-dd] --distance [20] ...[[idx:arrow]]
+   * update --id 1 5:tr5tr 7:tr8bw
+   */
+}
+
+/**
+ * Lists all sessions with brief details
+ */
+if (cmd === "list") {
+  const sessionList = await SessionList.loadFromFile();
+
+  const output = fmtSessionList(sessionList);
+
+  Deno.stdout.write(new TextEncoder().encode(output));
+
+  Deno.exit(0);
+}
+
+/**
  * by default the get command returns the last session
- * 
  */
 if (cmd === "get") {
   const sessionList = await SessionList.loadFromFile();
@@ -62,7 +84,7 @@ if (cmd === "get") {
   Deno.exit(0);
 }
 
-/** 
+/**
  * Parses a single encoded arrow
  */
 if (cmd === "decode") {

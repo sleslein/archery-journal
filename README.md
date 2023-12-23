@@ -4,6 +4,14 @@ A small app for tracking archery statistics.
 
 ## Commands
 
+### `list`
+
+Lists sessions
+
+```sh
+deno run --allow-read  mod.ts list
+```
+
 ### `record`
 
 Records a new session.
