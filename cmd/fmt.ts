@@ -1,15 +1,61 @@
-import { ArcherySession } from "../app/ArcherySession.ts";
+import { ArcherySession, TargetSessionStats } from "../app/ArcherySession.ts";
 import { SessionList } from "../app/SessionList.ts";
+import { DecodedDirection } from "../app/arrow-value.ts";
+
+function fmtField(
+  label: string,
+  val: string | number,
+  totalLen: number,
+): string {
+  return `${label}: ${val}`.padEnd(totalLen);
+}
+
+function fmtTargetPlacements(
+  targetPlacements: Map<DecodedDirection, TargetSessionStats>,
+): string {
+  const targetNameLen = 14; // max length of Decoded Direction
+  let result = `
+Target         | Total | Pts  | Avg  | 10 | 0 
+-------------- | ----- | ---- | ---- | -- | --
+`;
+
+  targetPlacements.forEach((value, key) => {
+    result = result.concat(
+      key.padEnd(targetNameLen),
+      " | ",
+      value.totalArrows.toString().padEnd(5),
+      " | ",
+      value.totalPoints.toString().padEnd(4),
+      " | ",
+      value.avg.toFixed(2),
+      " | ",
+      value.tens.toString().padEnd(2),
+      " | ",
+      value.misses.toString().padEnd(2),
+      "\n",
+    );
+  });
+  return result;
+}
 
 export function fmtSessionDetails(session: ArcherySession) {
+  const byTarget = fmtTargetPlacements(session.stats.scoreByTarget);
   return `
-date: ${session.date}
-distance: ${session.distance}
-total shots: ${session.stats.totalArrows}
-avg: ${session.stats.avg.toFixed(2)}
+Session Info
+${fmtField("Date", session.date, 20)} ${
+    fmtField("Distance", session.distance, 20)
+  }
+Invalid Entries: ${session.stats.invalidEntries.join(" ")}
+
+Session Summary
+${fmtField("Total Shots", session.stats.totalArrows, 20)} ${
+    fmtField("Avg", session.stats.avg.toFixed(2), 20)
+  }
 10: ${session.stats.tens}
 0: ${session.stats.misses}
-invalid entries: ${session.stats.invalidEntries.join(" ")}\n`;
+
+Summary By Target Placement ${byTarget}
+`;
 }
 
 export function fmtSessionList(list: SessionList) {

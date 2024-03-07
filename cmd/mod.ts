@@ -82,7 +82,11 @@ if (cmd === "update") {
 
   sessionList.saveToFile();
 
-  Deno.stdout.write(new TextEncoder().encode(`Successfully updated session:\n\n ${fmtSessionDetails(session)}`));
+  Deno.stdout.write(
+    new TextEncoder().encode(
+      `Successfully updated session:\n\n ${fmtSessionDetails(session)}`,
+    ),
+  );
 
   Deno.exit(0);
 }

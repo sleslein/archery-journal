@@ -1,4 +1,8 @@
-import { DecodedArrow, tryDecodeArrowValue } from "./arrow-value.ts";
+import {
+  DecodedArrow,
+  DecodedDirection,
+  tryDecodeArrowValue,
+} from "./arrow-value.ts";
 
 interface SessionDetails {
   date: string;
@@ -66,7 +70,13 @@ export type SessionStats = {
   tens: number;
   avg: number;
   invalidEntries: string[];
+  scoreByTarget: Map<DecodedDirection, TargetSessionStats>;
 };
+
+export type TargetSessionStats = Omit<
+  SessionStats,
+  "scoreByTarget" | "invalidEntries"
+>;
 
 function calcSessionStats(
   arrows: Array<[boolean, DecodedArrow]>,
@@ -76,12 +86,38 @@ function calcSessionStats(
     misses = 0,
     tens = 0;
 
+  const scoreByTarget = new Map<DecodedDirection, TargetSessionStats>();
+
   const invalidEntries: string[] = [];
 
   arrows.forEach(([isValid, decodedArrow]) => {
     if (!isValid) {
       invalidEntries.push(decodedArrow.encodedValue);
       return;
+    }
+
+    if (decodedArrow.targetPlacement) {
+      let targetSessionStats = scoreByTarget.get(decodedArrow.targetPlacement);
+      if (targetSessionStats === undefined) {
+        targetSessionStats = {
+          totalArrows: 1,
+          misses: decodedArrow.points === 0 ? 1 : 0,
+          tens: decodedArrow.points === 10 ? 1 : 0,
+          totalPoints: decodedArrow.points,
+          avg: decodedArrow.points,
+        };
+        scoreByTarget.set(decodedArrow.targetPlacement, targetSessionStats);
+      } else {
+        targetSessionStats.totalArrows += 1;
+        targetSessionStats.totalPoints += decodedArrow.points;
+        if (decodedArrow.points === 0) {
+          targetSessionStats.misses += 1;
+        } else if (decodedArrow.points === 10) {
+          targetSessionStats.tens += 1;
+        }
+        targetSessionStats.avg = targetSessionStats.totalPoints /
+          targetSessionStats.totalArrows;
+      }
     }
 
     totalArrows += 1;
@@ -102,6 +138,7 @@ function calcSessionStats(
     tens,
     avg,
     invalidEntries,
+    scoreByTarget,
   };
 }
 
