@@ -22,8 +22,10 @@ export class ArcherySession implements SessionDetails {
 
     this.date = encodedDate;
     this.distance = encodedDistance.replace("distance:", "");
-    encodedArrows.map((strArrow) => {
-      this.arrows.push(tryDecodeArrowValue(strArrow));
+    encodedArrows.forEach((strArrow) => {
+      if(strArrow) {
+        this.arrows.push(tryDecodeArrowValue(strArrow));
+      }
     });
 
     this.stats = calcSessionStats(this.arrows);
