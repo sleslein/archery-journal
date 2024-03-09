@@ -1,4 +1,5 @@
-import { parse } from "https://deno.land/std@0.108.0/flags/mod.ts";
+// import { parse } from "https://deno.land/std@0.108.0/flags/mod.ts";
+import { parseArgs } from "https://deno.land/std@0.219.0/cli/mod.ts";
 import { tryDecodeArrowValue } from "../app/arrow-value.ts";
 import { ArcherySession } from "../app/ArcherySession.ts";
 import { SessionList } from "../app/SessionList.ts";
@@ -7,7 +8,7 @@ import { fmtSessionDetails, fmtSessionList } from "./fmt.ts";
 const commands = ["decode", "record", "update", "get", "list"] as const;
 type Command = typeof commands[number];
 
-const args = parse(Deno.args);
+const args = parseArgs(Deno.args);
 const cmd = args._[0] as Command;
 
 if (!commands.includes(cmd)) {
