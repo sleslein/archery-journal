@@ -97,8 +97,10 @@ if (cmd === "update") {
  */
 if (cmd === "list") {
   const sessionList = await SessionList.loadFromFile();
-
-  const output = fmtSessionList(sessionList);
+ 
+  const filterParams = { distance: args.distance?.toString() };
+  const sessions = sessionList.filter(filterParams);
+  const output = fmtSessionList(sessions);
 
   Deno.stdout.write(new TextEncoder().encode(output));
 

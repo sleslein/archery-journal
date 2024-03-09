@@ -1,7 +1,20 @@
 import { ArcherySession } from "./ArcherySession.ts";
 
+export interface ArcherySessionFilterParams {
+  distance?: string;
+}
+
 export class SessionList {
   sessions: ArcherySession[];
+  filter(params: ArcherySessionFilterParams): ArcherySession[] {
+    return this.sessions.filter((session) => { 
+      let include = true;
+      if(params.distance !== undefined) {
+        include = session.distance === params.distance;
+      }
+      return include;
+    });
+  }
 
   constructor(encodedSessions: string) {
     const lines = encodedSessions.split("\n").filter((x) => x !== "");

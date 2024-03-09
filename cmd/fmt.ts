@@ -1,5 +1,4 @@
 import { ArcherySession, TargetSessionStats } from "../app/ArcherySession.ts";
-import { SessionList } from "../app/SessionList.ts";
 import { DecodedDirection } from "../app/arrow-value.ts";
 
 function fmtField(
@@ -58,7 +57,7 @@ Summary By Target Placement ${byTarget}
 `;
 }
 
-export function fmtSessionList(list: SessionList) {
+export function fmtSessionList(sessions: ArcherySession[]) {
   const header = `
 idx date       dist avg  invalid 
 --- ---------- ---- ---- -------------------
@@ -66,7 +65,7 @@ idx date       dist avg  invalid
 
   const listDetails: string[] = [];
 
-  list.sessions.forEach((session, idx) => {
+  sessions.forEach((session, idx) => {
     const invalidEntries: string[] = [];
     session.arrows.forEach((arrow, arrowIdx) => {
       const [isValid, encodedArrow] = arrow;
@@ -82,5 +81,5 @@ idx date       dist avg  invalid
     );
   });
 
-  return `${header}\n${listDetails.join("\n")}\n\n`;
+  return `${header}${listDetails.join("\n")}\n\n`;
 }
