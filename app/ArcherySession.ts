@@ -23,7 +23,7 @@ export class ArcherySession implements SessionDetails {
     this.date = encodedDate;
     this.distance = encodedDistance.replace("distance:", "");
     encodedArrows.forEach((strArrow) => {
-      if(strArrow) {
+      if (strArrow) {
         this.arrows.push(tryDecodeArrowValue(strArrow));
       }
     });

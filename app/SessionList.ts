@@ -7,9 +7,9 @@ export interface ArcherySessionFilterParams {
 export class SessionList {
   sessions: ArcherySession[];
   filter(params: ArcherySessionFilterParams): ArcherySession[] {
-    return this.sessions.filter((session) => { 
+    return this.sessions.filter((session) => {
       let include = true;
-      if(params.distance !== undefined) {
+      if (params.distance !== undefined) {
         include = session.distance === params.distance;
       }
       return include;

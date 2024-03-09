@@ -97,7 +97,7 @@ if (cmd === "update") {
  */
 if (cmd === "list") {
   const sessionList = await SessionList.loadFromFile();
- 
+
   const filterParams = { distance: args.distance?.toString() };
   const sessions = sessionList.filter(filterParams);
   const output = fmtSessionList(sessions);
