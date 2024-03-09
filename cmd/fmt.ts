@@ -59,8 +59,8 @@ Summary By Target Placement ${byTarget}
 
 export function fmtSessionList(sessions: ArcherySession[]) {
   const header = `
-idx date       dist avg  invalid 
---- ---------- ---- ---- -------------------
+idx date       dist avg  10s 0s  invalid 
+--- ---------- ---- ---- --- --- -------------------
 `;
 
   const listDetails: string[] = [];
@@ -75,9 +75,8 @@ idx date       dist avg  invalid
     });
 
     listDetails.push(
-      `${idx.toString().padStart(3)} ${session.date} ${
-        session.distance.padEnd(4)
-      } ${session.stats.avg.toFixed(2)} ${invalidEntries.join(" ")}`,
+      `${idx.toString().padStart(3)} ${session.date} ${session.distance.padEnd(4)
+      } ${session.stats.avg.toFixed(2)} ${session.stats.tens.toString().padEnd(3)} ${session.stats.misses.toString().padEnd(3)} ${invalidEntries.join(" ")}`,
     );
   });
 
