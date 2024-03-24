@@ -23,8 +23,8 @@ export class SessionList {
     });
   }
 
-  static async loadFromFile(): Promise<SessionList> {
-    const data = await Deno.readTextFile("./arch-jrnl.txt");
+  static async loadFromFile(fileLocation = "./arch-jrnl.txt"): Promise<SessionList> {
+    const data = await Deno.readTextFile(fileLocation);
     return new SessionList(data);
   }
 

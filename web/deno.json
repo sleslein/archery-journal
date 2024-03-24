@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "start": "deno run --unstable-hmr --allow-net  --allow-read main.ts"
+  }
+}

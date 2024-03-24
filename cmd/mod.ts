@@ -102,7 +102,7 @@ if (cmd === "list") {
     distance: args.distance?.toString(),
   };
   let sessions = sessionList.filter(filterParams);
-  if(args.last !== undefined){
+  if (args.last !== undefined) {
     sessions = sessions.splice(-args.last);
   }
   const output = fmtSessionList(sessions);
