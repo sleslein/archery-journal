@@ -18,6 +18,7 @@ export function Layout({ title, description, children }: SiteData) {
             <meta property="og:type" content="article">
             <!-- More elements slow down JSX, but not template literals. -->
             <meta property="og:title" content="${title}">
+            <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1">
             <link rel='stylesheet' type="text/css" href="/static/global.css" />
         </head>
         <body>
