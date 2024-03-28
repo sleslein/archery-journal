@@ -22,7 +22,9 @@ export function Layout({ title, description, children }: SiteData) {
             <link rel='stylesheet' type="text/css" href="/static/global.css" />
         </head>
         <body>
+          <main>
             ${children}
+          </main>
         </body>
     </html>
     `;
