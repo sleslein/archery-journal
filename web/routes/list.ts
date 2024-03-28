@@ -54,8 +54,6 @@ app.get("/", async (context) => {
     children: html`
     <h1>My Archery List</h1>
     <form action="list">
-      <input type="hidden" name='sortBy' value='${sortParams.type}' />
-      <input type="hidden" name='sortDirection' value='${sortParams.direction}' />
       <label>
         Distance:
         <select name='distance'>
