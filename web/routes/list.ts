@@ -53,15 +53,13 @@ app.get("/", async (context) => {
     ...siteData,
     children: html`
     <h1>My Archery List</h1>
-    <form action="list">
-      <label>
-        Distance:
-        <select name='distance'>
-          <option value="">--</option>
-          <option value="20" ${distance === '20' && 'selected'}>20 yards</option>
-          <option value="30" ${distance === '30' && 'selected'}>30 yards</option>
-        </select
-      </label>
+    <form action="list" class="f-row align-items:center">
+      <label> Distance: </label>
+      <select name='distance'>
+        <option value="">--</option>
+        <option value="20" ${distance === '20' && 'selected'}>20 yards</option>
+        <option value="30" ${distance === '30' && 'selected'}>30 yards</option>
+      </select>
       <button>Filter</button>
     </form>
     <p>
