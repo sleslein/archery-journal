@@ -54,7 +54,7 @@ app.get("/", async (context) => {
     children: html`
     <h1>My Archery List</h1>
     <form action="list" class="f-row align-items:center">
-      <label> Distance: </label>
+      <label for="distance"> Distance: </label>
       <select name='distance'>
         <option value="">--</option>
         <option value="20" ${distance === '20' && 'selected'}>20 yards</option>
@@ -64,6 +64,7 @@ app.get("/", async (context) => {
     </form>
     <p>
       total sessions: ${sessions.length}
+      <a href="/new">New Session</a>
     </p>
     <table>
       ${TableHeader(sortParams, filterParams)}
