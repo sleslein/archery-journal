@@ -1,18 +1,21 @@
 import { html } from "https://deno.land/x/hono@v4.0.9/helper.ts";
 import { ArcherySession } from "../../../app/ArcherySession.ts";
 import {
-ArcherySessionFilterParams,
+  ArcherySessionFilterParams,
   ArcherySessionSortParams,
   SortType,
 } from "../../../app/SessionList.ts";
 
-export function TableHeader(sortParams: ArcherySessionSortParams, filterParams: ArcherySessionFilterParams) {
+export function TableHeader(
+  sortParams: ArcherySessionSortParams,
+  filterParams: ArcherySessionFilterParams,
+) {
   function buildSortParams(field: SortType) {
     return `sortBy=${field}${
       (sortParams.type === field && sortParams.direction === "asc")
         ? "&sortDirection=desc"
         : ""
-    }${filterParams.distance ? `&distance=${filterParams.distance}` : ''}`;
+    }${filterParams.distance ? `&distance=${filterParams.distance}` : ""}`;
   }
   return html`
     <tr>

@@ -1,49 +1,66 @@
-
 // TODO: Convert to modules!
 /**
  * @type string[]
  */
 const arrows = [];
 
-const getHiddenInputEl = () => document.getElementById('arrows'); 
-const getEditArrowEl = () => document.getElementById('edit-arrow'); 
+const getHiddenInputEl = () => document.getElementById("arrows");
+const getEditArrowEl = () => document.getElementById("edit-arrow");
+const getArrowInputEl = () => document.getElementById("arrowInput");
 
-function handleArrowAdd(e) {
-  // e.preventDefault();
+const inputEl = getArrowInputEl();
+inputEl.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    handleArrowAdd();
+    e.preventDefault();
+  }
+});
+function handleArrowAdd() {
   const hiddenInputEl = getHiddenInputEl();
-  const inputEl = document.getElementById('arrowInput');
 
   arrows.push(inputEl.value);
-  hiddenInputEl.value = arrows.join(' ');
-  inputEl.value = '';
+  hiddenInputEl.value = arrows.join(" ");
+  inputEl.value = "";
 
-  htmx.ajax('post', '/new/calc', {target: '#details', values: {'arrows': arrows.join(' ') }});
+  htmx.ajax("post", "/new/calc", {
+    target: "#details",
+    values: { "arrows": arrows.join(" ") },
+  });
 }
 
-function editArrow(idx) {
+function editArrow() {
   const hiddenInputEl = getHiddenInputEl();
   const inputEl = getEditArrowEl();
 
-  const editArrowIndexEl = document.getElementById('edit-arrow-index');
+  const editArrowIndexEl = document.getElementById("edit-arrow-index");
   arrows[editArrowIndexEl.value] = inputEl.value;
-  hiddenInputEl.value = arrows.join(' ');
+  hiddenInputEl.value = arrows.join(" ");
   closeEditDialog();
-  htmx.ajax('post', '/new/calc', {target: '#details', values: {'arrows': arrows.join(' ') }});
+  htmx.ajax("post", "/new/calc", {
+    target: "#details",
+    values: { "arrows": arrows.join(" ") },
+  });
 }
 
 function openEditDialog(arrowIndex) {
-  const editDialogEl = document.getElementById('edit-dialog');
+  const editDialogEl = document.getElementById("edit-dialog");
   editDialogEl.showModal();
-  const inputEl = document.getElementById('edit-arrow');
+  const inputEl = document.getElementById("edit-arrow");
   inputEl.value = arrows[arrowIndex];
-  const editArrowIndexEl = document.getElementById('edit-arrow-index');
+  const editArrowIndexEl = document.getElementById("edit-arrow-index");
   editArrowIndexEl.value = arrowIndex;
 }
 
 function closeEditDialog() {
-  const editDialogEl = document.getElementById('edit-dialog');
+  const editDialogEl = document.getElementById("edit-dialog");
   editDialogEl.close();
 
-  const inputEl = document.getElementById('edit-arrow');
-  inputEl.value = '';
+  const inputEl = document.getElementById("edit-arrow");
+  inputEl.value = "";
 }
+
+document.getElementById("edit-arrow").addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    editArrow();
+  }
+});
