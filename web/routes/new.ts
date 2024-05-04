@@ -83,7 +83,7 @@ app.post("/calc", async (context) => {
 
   const arrowListEl = ArrowList(arrows);
   return context.html(`
-  <div>
+  <div class="f-switch">
     ${arrowListEl}
     ${StatsDisplay(session.stats)}
   </div>`);
