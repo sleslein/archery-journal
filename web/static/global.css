@@ -1,0 +1,11 @@
+h1 {
+    font-size: large;
+}
+
+.hidden {
+  display: none;
+}
+
+.text-sm {
+  font-size: .875rem;
+}
