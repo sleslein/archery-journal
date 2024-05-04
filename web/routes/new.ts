@@ -120,6 +120,16 @@ function StatsDisplay(stats: SessionStats) {
     })
   }
   </tbody>
+  <tfoot>
+    <tr>
+      <td>totals</td>
+      <td>${stats.totalArrows}</td>
+      <td>${stats.totalPoints}</td>
+      <td>${stats.avg}</td>
+      <td>${stats.tens}</td>
+      <td>${stats.misses}</td>
+    </tr>
+  </tfoot>
 </table>
   `;
 }
