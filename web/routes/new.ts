@@ -40,7 +40,8 @@ app.get("/", async (context) => {
         />
         <button type="button" onclick='handleArrowAdd()'>Add</button>
       </p>
-      <input type="hidden" 
+      <input type="hidden"
+        name="arrows" 
         id="arrows" 
         hx-get="/new/calc"
         hx-trigger="change"

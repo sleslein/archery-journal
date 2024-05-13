@@ -18,26 +18,28 @@ export function TableHeader(
     }${filterParams.distance ? `&distance=${filterParams.distance}` : ""}`;
   }
   return html`
+    <thead>
     <tr>
-      <td>
+      <th>
         <a href='?${buildSortParams("date")}'>Date</a>
-      </td>
-      <td>
+      </th>
+      <th>
         <a href='?${buildSortParams("distance")}'>Distance</a>
-      </td>
-      <td>
+      </th>
+      <th>
         <a href='?${buildSortParams("avg")}'>Average</a>
-      </td>
-      <td>
+      </th>
+      <th>
         <a href='?${buildSortParams("tens")}'>10s</a>
-      </td>
-      <td>
+      </th>
+      <th>
         <a href='?${buildSortParams("misses")}'>0s</a>
       </td>
-      <td>
+      <th>
         <a href='?${buildSortParams("invalid")}'>invalid</a>
-      </td>
-    </tr>`;
+      </th>
+    </tr>
+    </thead>`;
 }
 
 export function TableRow(session: ArcherySession) {
