@@ -12,6 +12,7 @@ import {
   SortTypes,
 } from "../../app/SessionList.ts";
 import { TableHeader, TableRow } from "../views/list/sessionTable.ts";
+import { LoadSessionListFromFile } from "../SessionData.ts";
 
 const app = new Hono();
 
@@ -36,7 +37,7 @@ app.get("/", async (context) => {
     description: "List Page",
   };
 
-  const sessionList = await SessionList.loadFromFile("../arch-jrnl.txt");
+  const sessionList = await LoadSessionListFromFile();
 
   const { distance: queryDistance } = context.req.query();
   let distance: string | undefined = queryDistance;

@@ -49,11 +49,11 @@ export class SessionList {
     return new SessionList(data);
   }
 
-  async saveToFile() {
+  async saveToFile(fileLocation: string = "./arch-jrnl.txt") {
     // copy/rename old file
     Deno.renameSync(
-      "./arch-jrnl.txt",
-      `./arch-jrnl.txt-${new Date().toISOString()}`,
+      fileLocation,
+      `${fileLocation}-jrnl.txt-${new Date().toISOString()}`,
     );
 
     // generate new string with all sessions
