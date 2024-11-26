@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.205.0/assert/mod.ts";
+import { assertEquals } from "@std/assert";
 import { tryDecodeArrowValue } from "../arrow-value.ts";
 
 Deno.test("given simple number return points", () => {

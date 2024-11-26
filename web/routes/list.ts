@@ -1,7 +1,7 @@
-import { Hono } from "https://deno.land/x/hono@v4.0.9/mod.ts";
+import { Hono } from "@hono/hono";
 import { Layout } from "../views/Layout.ts";
 import { SiteData } from "../views/Layout.ts";
-import { html } from "https://deno.land/x/hono@v4.0.9/helper.ts";
+import { html } from "@hono/hono/html";
 import {
   ArcherySessionFilterParams,
   ArcherySessionSortParams,

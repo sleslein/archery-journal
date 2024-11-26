@@ -1,5 +1,5 @@
-import { Hono } from "https://deno.land/x/hono@v4.0.9/mod.ts";
-import { serveStatic } from "https://deno.land/x/hono@v4.0.9/middleware.ts";
+import { Hono } from "@hono/hono";
+import { serveStatic } from "@hono/hono/deno";
 import list from "./routes/list.ts";
 import newSession from "./routes/new.ts";
 

@@ -1,5 +1,15 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@hono/hono@^4.6.12": "jsr:@hono/hono@4.6.12"
+    },
+    "jsr": {
+      "@hono/hono@4.6.12": {
+        "integrity": "fa0b97fa7c3292f0d9957109ac07a475fe485868795b71b8e3114c284152cdb5"
+      }
+    }
+  },
   "remote": {
     "https://deno.land/x/hono@v4.0.9/adapter/deno/serve-static.ts": "62b57d461ecebbc7b98809c4fc2a8358f0828d6e89cdc6841054e5bb3828fc80",
     "https://deno.land/x/hono@v4.0.9/adapter/deno/ssg.ts": "49d73dd0d351fc52a54bfc8094096aff957f5a955a3eb976844ed8d88903bc0f",
@@ -139,5 +149,10 @@
     "https://deno.land/x/hono@v4.1.0/utils/jwt/types.ts": "1dd79fce49dcaf54511d9bca88f5ae508cef577225aa581c811b248dc9c7a121",
     "https://deno.land/x/hono@v4.1.0/utils/mime.ts": "1e5db0919d2127995ec466dfd1ee637c3d63084f516ccbd3c6906ccf0d3f3c46",
     "https://deno.land/x/hono@v4.1.0/utils/url.ts": "d9d307a495e7dfc6e916fbcfa74c2d8d23e8e685bddc5e6ebc9c0f784345a01a"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@hono/hono@^4.6.12"
+    ]
   }
 }

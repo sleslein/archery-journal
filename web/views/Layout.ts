@@ -1,5 +1,5 @@
-import { html } from "https://deno.land/x/hono@v4.0.9/helper.ts";
-import { HtmlEscapedString } from "https://deno.land/x/hono@v4.0.9/utils/html.ts";
+import { html } from "@hono/hono/html";
+import { HtmlEscapedString } from "@hono/hono/utils/html";
 
 export interface SiteData {
   title: string;

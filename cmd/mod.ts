@@ -1,5 +1,5 @@
 // import { parse } from "https://deno.land/std@0.108.0/flags/mod.ts";
-import { parseArgs } from "https://deno.land/std@0.219.0/cli/mod.ts";
+import { parseArgs } from "@std/cli";
 import { tryDecodeArrowValue } from "../app/arrow-value.ts";
 import { ArcherySession } from "../app/ArcherySession.ts";
 import { SessionList } from "../app/SessionList.ts";
