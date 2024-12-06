@@ -59,13 +59,13 @@ Summary By Target Placement ${byTarget}
 
 export function fmtSessionList(sessions: ArcherySession[]) {
   const header = `
-idx date       dist avg  10s 0s  invalid 
---- ---------- ---- ---- --- --- -------------------
+id   date       dist avg  10s 0s  invalid 
+---- ---------- ---- ---- --- --- -------------------
 `;
 
   const listDetails: string[] = [];
 
-  sessions.forEach((session, idx) => {
+  sessions.forEach((session) => {
     const invalidEntries: string[] = [];
     session.arrows.forEach((arrow, arrowIdx) => {
       const [isValid, encodedArrow] = arrow;
@@ -75,7 +75,7 @@ idx date       dist avg  10s 0s  invalid
     });
 
     listDetails.push(
-      `${idx.toString().padStart(3)} ${session.date} ${
+      `${session.id.toString().padStart(4)} ${session.date} ${
         session.distance.padEnd(4)
       } ${session.stats.avg.toFixed(2)} ${
         session.stats.tens.toString().padEnd(3)

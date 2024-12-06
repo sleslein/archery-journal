@@ -12,11 +12,12 @@ import {
   SortTypes,
 } from "../../app/SessionList.ts";
 import { TableHeader, TableRow } from "../views/list/sessionTable.ts";
-import { LoadSessionListFromFile } from "../SessionData.ts";
+import { createRepository } from "@repository";
 
 const app = new Hono();
+const repository = createRepository();
 
-app.get("/", async (context) => {
+app.get("/", (context) => {
   function convertQueryToSortParams(): ArcherySessionSortParams {
     const { sortBy, sortDirection } = context.req.query();
 
@@ -37,7 +38,7 @@ app.get("/", async (context) => {
     description: "List Page",
   };
 
-  const sessionList = await LoadSessionListFromFile();
+  const sessionList = repository.readAll();
 
   const { distance: queryDistance } = context.req.query();
   let distance: string | undefined = queryDistance;
@@ -45,7 +46,7 @@ app.get("/", async (context) => {
     distance = undefined;
   }
   const filterParams: ArcherySessionFilterParams = { distance };
-  let sessions = sessionList.filter(filterParams);
+  let sessions = SessionList.filter(sessionList, filterParams);
 
   const sortParams = convertQueryToSortParams();
   sessions = SessionList.sort(sessions, sortParams);

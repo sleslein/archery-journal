@@ -4,22 +4,25 @@ import {
   tryDecodeArrowValue,
 } from "./arrow-value.ts";
 
-interface SessionDetails {
+export interface SessionDetails {
+  id: number;
   date: string;
   distance?: string;
   arrows: Array<[boolean, DecodedArrow]>;
 }
 
 export class ArcherySession implements SessionDetails {
+  id: number;
   date: string;
   distance: string;
   arrows: Array<[boolean, DecodedArrow]> = [];
   stats: SessionStats;
 
-  constructor(encodedSession: string) {
+  constructor(encodedSession: string, id: number = 0) {
     const [encodedDate, encodedDistance, ...encodedArrows] = encodedSession
       .split(" ");
 
+    this.id = id;
     this.date = encodedDate;
     this.distance = encodedDistance.replace("distance:", "");
     encodedArrows.forEach((strArrow) => {
