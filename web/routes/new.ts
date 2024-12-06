@@ -8,9 +8,10 @@ import {
   TargetSessionStats,
 } from "../../app/ArcherySession.ts";
 import { DecodedArrow, DecodedDirection } from "../../app/arrow-value.ts";
-import { SaveSession } from "../SessionData.ts";
+import { createRepository } from "@repository";
 
 const app = new Hono();
+const respository = createRepository();
 
 const siteData: SiteData = {
   title: "My Archery Jounal",
@@ -186,7 +187,7 @@ app.post("/", async (context) => {
 
   const encodedSession = ArcherySession.encodeSession(requestSession);
   const session = new ArcherySession(encodedSession);
-  SaveSession(session);
+  respository.create(session);
 
   return context.redirect("/list", 303);
 });

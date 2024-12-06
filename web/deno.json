@@ -1,9 +1,13 @@
 {
   "tasks": {
-    "dev": "deno run --unstable-hmr --allow-net  --allow-read --allow-write main.ts"
+    "dev": "deno run --unstable-hmr --allow-net --allow-ffi --allow-env --allow-read main.ts --db=../db/test.db"
   },
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.6.12"
+    "@hono/hono": "jsr:@hono/hono@^4.6.12",
+    "@db/sqlite": "jsr:@db/sqlite@^0.12.0",
+    "@repository": "../db/repository.ts"
+  },
+  "lint": {
+    "exclude": ["web/static/js/*"]
   }
-
 }

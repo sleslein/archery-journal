@@ -142,4 +142,17 @@ export class SessionList {
         return list;
     }
   }
+
+  static filter(
+    sessions: ArcherySession[],
+    params: ArcherySessionFilterParams,
+  ) {
+    return sessions.filter((session) => {
+      let include = true;
+      if (params.distance !== undefined) {
+        include = session.distance === params.distance;
+      }
+      return include;
+    });
+  }
 }

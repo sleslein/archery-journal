@@ -1,15 +1,23 @@
-// import { parse } from "https://deno.land/std@0.108.0/flags/mod.ts";
 import { parseArgs } from "@std/cli";
 import { tryDecodeArrowValue } from "../app/arrow-value.ts";
 import { ArcherySession } from "../app/ArcherySession.ts";
 import { SessionList } from "../app/SessionList.ts";
 import { fmtSessionDetails, fmtSessionList } from "./fmt.ts";
+import { createRepository } from "../db/repository.ts";
 
-const commands = ["decode", "record", "update", "get", "list"] as const;
+const commands = [
+  "decode",
+  "record",
+  "update",
+  "get",
+  "list",
+  "delete",
+] as const;
 type Command = typeof commands[number];
 
 const args = parseArgs(Deno.args);
 const cmd = args._[0] as Command;
+const repository = createRepository();
 
 if (!commands.includes(cmd)) {
   Deno.stdout.write(new TextEncoder().encode(`unknown command ${cmd}`));
@@ -34,7 +42,7 @@ if (cmd === "record") {
     arrows,
   });
   const session = new ArcherySession(encodedSession);
-  session.save();
+  repository.create(session);
 
   Deno.stdout.write(
     new TextEncoder().encode(
@@ -53,7 +61,7 @@ if (cmd === "update") {
    * update --id [4] --date [yyyy-mm-dd] --distance [20] ...[[idx:arrow]]
    * update --id 1 5:tr5tr 7:tr8bw
    */
-  const sessionList = await SessionList.loadFromFile();
+
   const { date, distance, id } = args;
 
   if (!id) {
@@ -65,7 +73,7 @@ if (cmd === "update") {
     Deno.exit(1);
   }
 
-  const session = sessionList.sessions[id];
+  const session = repository.getSessionById(id);
 
   if (distance) {
     session.distance = distance;
@@ -81,7 +89,7 @@ if (cmd === "update") {
     session.updateArrow(parseInt(idx), encodedValue);
   });
 
-  sessionList.saveToFile();
+  repository.update(session);
 
   Deno.stdout.write(
     new TextEncoder().encode(
@@ -96,12 +104,12 @@ if (cmd === "update") {
  * Lists all sessions with brief details
  */
 if (cmd === "list") {
-  const sessionList = await SessionList.loadFromFile();
+  const sessionList = repository.readAll();
 
   const filterParams = {
     distance: args.distance?.toString(),
   };
-  let sessions = sessionList.filter(filterParams);
+  let sessions = SessionList.filter(sessionList, filterParams);
   if (args.last !== undefined) {
     sessions = sessions.splice(-args.last);
   }
@@ -116,13 +124,29 @@ if (cmd === "list") {
  * by default the get command returns the last session
  */
 if (cmd === "get") {
-  const sessionList = await SessionList.loadFromFile();
-
-  const session = sessionList.sessions[sessionList.sessions.length - 1];
+  const id = typeof (args._[1]) === "number"
+    ? args._[1]
+    : Number.parseInt(args._[1]);
+  const session = repository.getSessionById(id);
 
   Deno.stdout.write(
     new TextEncoder().encode(
       `Session Stats: ${fmtSessionDetails(session)}`,
+    ),
+  );
+
+  Deno.exit(0);
+}
+
+if (cmd === "delete") {
+  const id = typeof (args._[1]) === "number"
+    ? args._[1]
+    : Number.parseInt(args._[1]);
+  repository.delete(id);
+
+  Deno.stdout.write(
+    new TextEncoder().encode(
+      `Deleted Session ${id}`,
     ),
   );
 

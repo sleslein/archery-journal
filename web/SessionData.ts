@@ -8,11 +8,11 @@ export async function LoadSessionListFromFile() {
   if (sessionList === undefined) {
     sessionList = await SessionList.loadFromFile(fileLocation);
   }
-  return sessionList;  
+  return sessionList;
 }
 
 export async function SaveSession(session: ArcherySession) {
-  if(sessionList === undefined) {
+  if (sessionList === undefined) {
     sessionList = await LoadSessionListFromFile();
   }
   sessionList.sessions.push(session);
