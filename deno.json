@@ -6,7 +6,7 @@
     "@std/cli": "jsr:@std/cli@^1.0.7"
   },
   "lint": {
-    "exclude": ["web/static/js/vendor*"]
+    "exclude": ["web/static/js/vendor/*"]
   },
   "fmt": {
     "exclude": ["web/static/js/vendor*"]
