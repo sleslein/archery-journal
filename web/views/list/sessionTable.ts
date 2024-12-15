@@ -104,8 +104,9 @@ export function TableRow(
           hx-swap="innerHTML swap:1s"
           hx-target="#sessions"
           hx-confirm="Are you sure you want to delete this session?"
+          class="iconButton"
         >
-            Delete
+          <img src="/static/icons/icon-trash.svg" style={height:100%} />
         </button>
       </td>
       <td>${session.date}</td>
