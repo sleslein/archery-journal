@@ -10,6 +10,33 @@ h1 {
   font-size: 0.875rem;
 }
 
+button.iconButton {
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+a.iconButton {
+  /* Copied from button.iconButton */
+  color: currentColor;
+  box-shadow: none;
+  line-height: var(--rhythm);
+  text-align: center;
+  background: 0 0;
+  border: none;
+  /* border-radius: 50%; */
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: 24px;
+  transition: font-weight 0.2s ease-in-out;
+  display: inline-block;
+}
+
+a.iconButton:hover {
+  box-shadow: none;
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
 tr .iconButton:hover {
   outline-offset: 0;
 }

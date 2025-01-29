@@ -98,7 +98,7 @@ export function TableRow(
 
   return html`
     <tr>
-      <td>
+      <td class="f-row crowded">
         <button 
           hx-delete="/delete/${session.id}${query}"
           hx-swap="innerHTML swap:1s"
@@ -106,8 +106,12 @@ export function TableRow(
           hx-confirm="Are you sure you want to delete this session?"
           class="iconButton"
         >
-          <img src="/static/icons/icon-trash.svg" style={height:100%} />
+          <img src="/static/icons/icon-trash.svg" alt="trash icon" style={height:100%} />
         </button>
+        <a href="/edit/${session.id}" class="<button> iconButton">
+          <img src="/static/icons/icon-edit.svg" alt="edit icon" />
+          <span class="vh">edit</span>
+        </a>
       </td>
       <td>${session.date}</td>
       <td>${session.distance}</td>

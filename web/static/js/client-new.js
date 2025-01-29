@@ -1,10 +1,13 @@
 // TODO: Convert to modules!
-/**
- * @type string[]
- */
-const arrows = [];
 
 const getHiddenInputEl = () => document.getElementById("arrows");
+function getHiddenInputValue() {
+  return getHiddenInputEl().value;
+}
+function setHiddenInputValue(val) {
+  const hiddenInputEl = getHiddenInputEl();
+  hiddenInputEl.value = val;
+}
 const getEditArrowEl = () => document.getElementById("edit-arrow");
 const getArrowInputEl = () => document.getElementById("arrowInput");
 
@@ -15,38 +18,42 @@ inputEl.addEventListener("keydown", (e) => {
     e.preventDefault();
   }
 });
-function handleArrowAdd() {
-  const hiddenInputEl = getHiddenInputEl();
 
-  arrows.push(inputEl.value);
-  hiddenInputEl.value = arrows.join(" ");
+function handleArrowAdd() {
+  const arrowArray = getHiddenInputValue().split(" ");
+
+  arrowArray.push(inputEl.value);
+  setHiddenInputValue(arrowArray.join(" "));
   inputEl.value = "";
 
   htmx.ajax("post", "/new/calc", {
     target: "#details",
-    values: { "arrows": arrows.join(" ") },
+    values: { "arrows": arrowArray.join(" ") },
   });
 }
 
 function editArrow() {
-  const hiddenInputEl = getHiddenInputEl();
+  const arrowArray = getHiddenInputValue().split(" ");
   const inputEl = getEditArrowEl();
 
   const editArrowIndexEl = document.getElementById("edit-arrow-index");
-  arrows[editArrowIndexEl.value] = inputEl.value;
-  hiddenInputEl.value = arrows.join(" ");
+  arrowArray[editArrowIndexEl.value] = inputEl.value;
+  setHiddenInputValue(arrowArray.join(" "));
   closeEditDialog();
   htmx.ajax("post", "/new/calc", {
     target: "#details",
-    values: { "arrows": arrows.join(" ") },
+    values: { "arrows": arrowArray.join(" ") },
   });
 }
 
 function openEditDialog(arrowIndex) {
   const editDialogEl = document.getElementById("edit-dialog");
   editDialogEl.showModal();
+
+  const hiddenArrowVal = getHiddenInputEl().value;
+  const hiddenArrows = hiddenArrowVal.split(" ");
   const inputEl = document.getElementById("edit-arrow");
-  inputEl.value = arrows[arrowIndex];
+  inputEl.value = hiddenArrows[arrowIndex];
   const editArrowIndexEl = document.getElementById("edit-arrow-index");
   editArrowIndexEl.value = arrowIndex;
 }
