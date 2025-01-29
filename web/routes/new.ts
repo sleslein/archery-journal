@@ -124,14 +124,6 @@ function ArrowListItem(decodedArrow: [boolean, DecodedArrow], idx: number) {
   `;
 }
 
-function EditDialog() {
-  return html`<dialog id='edit-dialog' >
-      <input id='edit-arrow-index' type="hidden" />
-      <input id="edit-arrow" type="input" />
-      <button onClick="editArrow()">Update</button>
-    </dialog>`;
-}
-
 app.post("/", async (context) => {
   const body = await context.req.parseBody();
 
