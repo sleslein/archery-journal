@@ -12,7 +12,7 @@ export interface SessionFormProps {
 export function sessionForm({ pageTitle, session}: SessionFormProps) {
   return html`
       <h1>${pageTitle}</h1>
-      <form method="post" class="table rows">
+      <form method="post" class="table rows crowded">
       <input type="hidden" name="id" id="id" value='${session?.id}' />
       <p><label for="date">Date</label><input name="date" type="date" value="${session?.date}" /></p>
       <p>
